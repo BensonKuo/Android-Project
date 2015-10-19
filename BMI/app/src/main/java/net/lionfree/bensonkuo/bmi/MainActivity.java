@@ -12,7 +12,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText heightText;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
         heightText = (EditText)findViewById(R.id.height);
         weightText = (EditText)findViewById(R.id.weight);
 
-        Intent intent = new Intent(this, ResultActivity.class);
+        Intent intent = new Intent();
+        intent.setClass(this, ResultActivity.class);
         intent.putExtra("weight", heightText.getText().toString());
         intent.putExtra("height", weightText.getText().toString());
 
