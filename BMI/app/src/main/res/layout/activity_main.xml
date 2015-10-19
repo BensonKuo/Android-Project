@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:text="Calculate"
             android:id="@+id/calc"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:onClick="calc" />
     </LinearLayout>
 </RelativeLayout>
