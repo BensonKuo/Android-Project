@@ -22,7 +22,7 @@ public class ResultActivity extends AppCompatActivity {
         Double h = Double.parseDouble(getIntent().getStringExtra("height"));
         Double bmi = w/(h*h);
 
-        bmiText.setText(bmi.toString());
+        bmiText.setText( String.format("%.4g%n", bmi) );
         //finish();
     }
 
