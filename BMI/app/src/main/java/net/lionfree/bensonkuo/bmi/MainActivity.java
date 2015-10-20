@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         //Log.i("click","CLICK~~~");
         Intent intent = new Intent();
         intent.setClass(this, ResultActivity.class);
-        intent.putExtra("weight", heightText.getText().toString());
-        intent.putExtra("height", weightText.getText().toString());
+        intent.putExtra("weight", weightText.getText().toString());
+        intent.putExtra("height", heightText.getText().toString());
 
         // 單向的Intent
         startActivity(intent);
