@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestart(){
-        super.onRestart();
+    protected void onResume(){
+        super.onResume();
 
         heightText = (EditText)findViewById(R.id.height);
         weightText = (EditText)findViewById(R.id.weight);
