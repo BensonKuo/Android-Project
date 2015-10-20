@@ -21,14 +21,20 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/weight"
-            android:hint="weight(kg)" />
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/height"
+            android:hint="height(m)"
+            android:text="height(m)" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/height"
-            android:hint="height(m)" />
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/weight"
+            android:layout_gravity="center_horizontal"
+            android:hint="weight(kg)" />
 
         <Button
             android:layout_width="wrap_content"
@@ -37,5 +43,13 @@
             android:id="@+id/calc"
             android:layout_gravity="center_horizontal"
             android:onClick="calc" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="reset"
+            android:id="@+id/reset"
+            android:enabled="true" />
+
     </LinearLayout>
 </RelativeLayout>

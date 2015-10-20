@@ -31,7 +31,7 @@ public class ResultActivity extends AppCompatActivity {
 
 
     public void reset(View view)(){
-        
+
     }
 
 
