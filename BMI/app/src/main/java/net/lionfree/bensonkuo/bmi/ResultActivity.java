@@ -19,7 +19,8 @@ public class ResultActivity extends AppCompatActivity {
 
         bmiText = (TextView)findViewById(R.id.bmiText);
         Double w = Double.parseDouble(getIntent().getStringExtra("weight"));
-        Double h = Double.parseDouble(getIntent().getStringExtra("height"));
+        Double h = Double.parseDouble(getIntent().getStringExtra("height"))/100;
+
         Double bmi = w/(h*h);
 
         bmiText.setText( String.format("%.4g%n", bmi) );

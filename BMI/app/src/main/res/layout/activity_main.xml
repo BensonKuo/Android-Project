@@ -24,7 +24,7 @@
             android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/height"
-            android:hint="height(m)" />
+            android:hint="height(cm)" />
 
         <EditText
             android:layout_width="match_parent"
