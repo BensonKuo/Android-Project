@@ -23,14 +23,23 @@ public class MainActivity extends AppCompatActivity {
         heightText = (EditText)findViewById(R.id.height);
         weightText = (EditText)findViewById(R.id.weight);
         //Log.i("click","CLICK~~~");
-        Intent intent = new Intent();
-        intent.setClass(this, ResultActivity.class);
+        Intent intent = new Intent(this, ResultActivity.class);
+        //intent.setClass();
         intent.putExtra("weight", weightText.getText().toString());
         intent.putExtra("height", heightText.getText().toString());
-
         // 單向的Intent
         startActivity(intent);
     }
 
+    @Override
+    protected void onRestart(){
+        super.onRestart();
 
+        heightText = (EditText)findViewById(R.id.height);
+        weightText = (EditText)findViewById(R.id.weight);
+
+        heightText.setText("");
+        weightText.setText("");
+
+    }
 }

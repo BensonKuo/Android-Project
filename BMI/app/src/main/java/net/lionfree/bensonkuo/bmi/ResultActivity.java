@@ -23,15 +23,13 @@ public class ResultActivity extends AppCompatActivity {
         Double bmi = w/(h*h);
 
         bmiText.setText(bmi.toString());
-
         //finish();
-
     }
 
 
-
-    public void reset(View view)(){
-
+    public void reset(View view){
+        // close activity and go back
+        finish();
     }
 
 
