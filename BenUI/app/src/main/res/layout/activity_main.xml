@@ -33,33 +33,35 @@
             android:checked="false" />
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout3"
         android:layout_below="@+id/linearLayout4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/relativeLayout">
 
         <Spinner
-            android:layout_width="wrap_content"
+            android:layout_width="115dp"
             android:layout_height="wrap_content"
             android:id="@+id/storeSpinner"
             android:layout_alignBottom="@+id/submitButton"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="false"
-            android:layout_weight="1" />
+            android:layout_weight="0.07"
+            android:layout_toLeftOf="@+id/goTOMenu"
+            android:layout_toStartOf="@+id/goTOMenu" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Menu"
             android:id="@+id/goTOMenu"
-            android:layout_above="@+id/recordListView"
+            android:onClick="goToDrinkMenu"
+            android:layout_weight="0.07"
+            android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/submitButton"
-            android:layout_toStartOf="@+id/submitButton"
-            android:onClick="goToDrinkMenu" />
+            android:layout_toStartOf="@+id/submitButton" />
 
         <Button
             android:layout_width="wrap_content"
@@ -67,18 +69,17 @@
             android:text="Submit"
             android:id="@+id/submitButton"
             android:onClick="submit"
-            android:layout_below="@+id/hideCheckBox"
-            android:layout_alignRight="@+id/storeSpinner"
-            android:layout_alignEnd="@+id/storeSpinner" />
-
-    </LinearLayout>
+            android:layout_above="@+id/recordListView"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/recordListView"
-        android:layout_below="@+id/linearLayout3"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

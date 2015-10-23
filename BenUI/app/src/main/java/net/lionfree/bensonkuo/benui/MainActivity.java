@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         */
-
+        // 3. parse obj ver.
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("OrderInfo");
         List<ParseObject> rawData = null;
 
