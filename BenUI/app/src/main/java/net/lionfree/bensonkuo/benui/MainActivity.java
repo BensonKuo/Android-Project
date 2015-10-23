@@ -15,10 +15,12 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             String text = inputText.getText().toString();
             if (hideCheckBox.isChecked()){ text = "*****";}
 
-            // 用來儲存所有資料來 寫入檔案
+            // 1. 用來儲存所有資料來 寫入檔案
             JSONObject orderInfo = new JSONObject();
             orderInfo.put("name", text);
             orderInfo.put("storeInfo", storeSpinner.getSelectedItem().toString());
@@ -115,27 +117,28 @@ public class MainActivity extends AppCompatActivity {
             Utils.writeFile(this, "record.txt", orderInfoStr + "\n");
             // read files
             // String OrderCnt = Utils.readFile(this,"record.txt");
-            Toast.makeText(this,orderInfoStr,Toast.LENGTH_LONG).show();
 
-            // 存入 parse db
+            // 2. 存入 parse db
             ParseObject orderInfoObj = new ParseObject("OrderInfo"); //table name
             orderInfoObj.put("name", text);
             orderInfoObj.put("storeInfo", storeSpinner.getSelectedItem().toString());
-            orderInfoObj.put("order", new JSONArray(drinkMenuResult));
-            orderInfoObj.saveInBackground();
-
-
+            if (drinkMenuResult != null){  //不然未選送出menu內容送出會crash
+                orderInfoObj.put("order", new JSONArray(drinkMenuResult));
+            }
+            orderInfoObj.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    // update listview after saved
+                    showRecord();
+                    Toast.makeText(MainActivity.this,"Saved!",Toast.LENGTH_LONG).show();
+                }
+            });
             // 送出後清空 inputText, sp
             inputText.setText("");
             editor.putString("inputText", " ");
             editor.commit();
-
-            // update listview
-            showRecord();
-
         }catch (JSONException e){
             e.toString();
-
         }
 
     }
@@ -173,14 +176,25 @@ public class MainActivity extends AppCompatActivity {
         */
         // 3. parse obj ver.
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("OrderInfo");
-        List<ParseObject> rawData = null;
+        // List<ParseObject> rawData = null;
 
-        try{
-            rawData = query.find();  // find all rows causing LAG!!
-            // return value type is List, alike Array.
-        } catch (ParseException e){
-            e.printStackTrace();
-        }
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null){
+                    orderObjectToListView(objects);
+                }
+            }
+        });
+//        try{
+//            rawData = query.find();  // find all rows causing LAG!!
+//            // return value type is List, alike Array.
+//        } catch (ParseException e){
+//            e.printStackTrace();
+//        }
+    }
+
+    private void orderObjectToListView(List<ParseObject> rawData) {
 
         List<Map<String,String>> data = new ArrayList<>();
 
