@@ -26,7 +26,7 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="hide text"
+            android:text="@string/hide_text"
             android:id="@+id/hideCheckBox"
             android:layout_below="@+id/inputText"
             android:layout_alignParentRight="true"
@@ -51,12 +51,13 @@
             android:layout_alignParentStart="false"
             android:layout_weight="0.07"
             android:layout_toLeftOf="@+id/goTOMenu"
-            android:layout_toStartOf="@+id/goTOMenu" />
+            android:layout_toStartOf="@+id/goTOMenu"
+            android:spinnerMode="dialog" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Menu"
+            android:text="@string/menu"
             android:id="@+id/goTOMenu"
             android:onClick="goToDrinkMenu"
             android:layout_weight="0.07"
@@ -67,7 +68,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit"
+            android:text="@string/send"
             android:id="@+id/submitButton"
             android:onClick="submit"
             android:layout_above="@+id/recordListView"
