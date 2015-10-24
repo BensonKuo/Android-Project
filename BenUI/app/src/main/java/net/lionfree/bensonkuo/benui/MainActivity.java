@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView recordListView;
     private Spinner storeSpinner;
-
     SharedPreferences sp;//讀取用
     SharedPreferences.Editor editor; //編輯用
 
@@ -56,14 +55,14 @@ public class MainActivity extends AppCompatActivity {
         sp = getSharedPreferences("setting", MODE_PRIVATE);
         editor = sp.edit();
 
-        inputText = (EditText)findViewById(R.id.inputText);
+        inputText = (EditText) findViewById(R.id.inputText);
         // 監控在input text時的按鍵動作
         inputText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
 
                 String text = inputText.getText().toString();
-                editor.putString("inputText",text);
+                editor.putString("inputText", text);
                 editor.commit();
 
                 // 取得動作是 按下 的話  && 是enter
@@ -76,34 +75,36 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        hideCheckBox = (CheckBox)findViewById(R.id.hideCheckBox);
+        hideCheckBox = (CheckBox) findViewById(R.id.hideCheckBox);
         //hideCheckBox.setChecked(false);
         hideCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                editor.putBoolean("hideCheckBox",isChecked);
+                editor.putBoolean("hideCheckBox", isChecked);
                 editor.apply();
             }
         });
 
 
         // restore status (key, deVal)
-        inputText.setText(sp.getString("inputText"," "));
+        inputText.setText(sp.getString("inputText", " "));
         hideCheckBox.setChecked(sp.getBoolean("hideCheckBox", false));
 
 
-        recordListView = (ListView)findViewById(R.id.recordListView);
+        recordListView = (ListView) findViewById(R.id.recordListView);
         showRecord();
 
-        storeSpinner = (Spinner)findViewById(R.id.storeSpinner);
+        storeSpinner = (Spinner) findViewById(R.id.storeSpinner);
         setStoreInfo();
     }
 
 
-    public void submit(View view){
-        try{
+    public void submit(View view) {
+        try {
             String text = inputText.getText().toString();
-            if (hideCheckBox.isChecked()){ text = "*****";}
+            if (hideCheckBox.isChecked()) {
+                text = "*****";
+            }
 
             // 1. 用來儲存所有資料來 寫入檔案
             JSONObject orderInfo = new JSONObject();
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             ParseObject orderInfoObj = new ParseObject("OrderInfo"); //table name
             orderInfoObj.put("name", text);
             orderInfoObj.put("storeInfo", storeSpinner.getSelectedItem().toString());
-            if (drinkMenuResult != null){  //不然未選送出menu內容送出會crash
+            if (drinkMenuResult != null) {  //不然未選送出menu內容送出會crash
                 orderInfoObj.put("order", new JSONArray(drinkMenuResult));
             }
             orderInfoObj.saveInBackground(new SaveCallback() {
@@ -130,21 +131,21 @@ public class MainActivity extends AppCompatActivity {
                 public void done(ParseException e) {
                     // update listview after saved
                     showRecord();
-                    Toast.makeText(MainActivity.this,"Saved!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Saved!", Toast.LENGTH_LONG).show();
                 }
             });
             // 送出後清空 inputText, sp
             inputText.setText("");
             editor.putString("inputText", " ");
             editor.commit();
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.toString();
         }
 
     }
 
 
-    private void showRecord(){
+    private void showRecord() {
         // 1. ListView ver.
         //String[] data = Utils.readFile(this,"record.txt").split("\n");
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, data);
@@ -177,28 +178,27 @@ public class MainActivity extends AppCompatActivity {
         // 3. parse obj ver.
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("OrderInfo");
         // List<ParseObject> rawData = null;
-
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if (e == null){
-                    orderObjectToListView(objects);
-                }
-            }
-        });
 //        try{
 //            rawData = query.find();  // find all rows causing LAG!!
 //            // return value type is List, alike Array.
 //        } catch (ParseException e){
 //            e.printStackTrace();
 //        }
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    orderObjectToListView(objects);
+                }
+            }
+        });
     }
 
     private void orderObjectToListView(List<ParseObject> rawData) {
 
-        List<Map<String,String>> data = new ArrayList<>();
+        List<Map<String, String>> data = new ArrayList<>();
 
-        for (int i=0; i<rawData.size(); i++){
+        for (int i = 0; i < rawData.size(); i++) {
             // different part
             ParseObject pobj = rawData.get(i);
 
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
             String storeInfo = pobj.getString("storeInfo");
             JSONArray order = pobj.getJSONArray("order");
 
-            Map<String,String> item = new HashMap();
+            Map<String, String> item = new HashMap();
             item.put("name", name);
             item.put("storeInfo", storeInfo);
             item.put("order", getDrinkNumber(order));
@@ -225,29 +225,47 @@ public class MainActivity extends AppCompatActivity {
         recordListView.setAdapter(adapter);
     }
 
-    private String getDrinkNumber(JSONArray order){
-        return "579";
+    private String getDrinkNumber(JSONArray order) {
+        return "17";
     }
 
-    private void setStoreInfo(){
-        String[] store = getResources().getStringArray(R.array.storeInfo);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,store);
-        storeSpinner.setAdapter(adapter);
+    private void setStoreInfo() {
+        //String[] store = getResources().getStringArray(R.array.storeInfo);
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("StoreInfo");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+
+                String[] store = new String[objects.size()];
+
+                for (int i = 0; i < objects.size(); i++) {
+                    ParseObject pobj = objects.get(i);
+                    String name = pobj.getString("name");
+                    String address = pobj.getString("address");
+                    //存入store array
+                    store[i] = name + ", " + address;
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, store);
+                storeSpinner.setAdapter(adapter);
+            }
+        });
+
+
     }
 
-    public void goToDrinkMenu(View view){
+    public void goToDrinkMenu(View view) {
         String storeInfoStr = storeSpinner.getSelectedItem().toString();
 
         Intent intent = new Intent();
-        intent.setClass(this,DrinkMenuActivity.class);
-        intent.putExtra("store_info",storeInfoStr);
+        intent.setClass(this, DrinkMenuActivity.class);
+        intent.putExtra("store_info", storeInfoStr);
 
         startActivityForResult(intent, REQUEST_DRINK_MENU);
     }
 
     // 接收回來的intent 跟startActivityForResult(), setResult()是一起的
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if ((requestCode==REQUEST_DRINK_MENU) &&(resultCode==RESULT_OK) ){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if ((requestCode == REQUEST_DRINK_MENU) && (resultCode == RESULT_OK)) {
             drinkMenuResult = data.getStringExtra("order");
         }
     }
