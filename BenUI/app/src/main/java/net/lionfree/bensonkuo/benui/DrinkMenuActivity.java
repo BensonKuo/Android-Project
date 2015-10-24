@@ -75,7 +75,11 @@ public class DrinkMenuActivity extends AppCompatActivity {
             }
         }
         return order;
+    }
 
+    public void cancel(View view){
+
+        finish();
     }
 
 }
