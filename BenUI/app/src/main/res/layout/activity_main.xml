@@ -94,4 +94,13 @@
         android:layout_marginTop="18dp"
         android:indeterminate="false" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/photo"
+        android:layout_alignRight="@+id/relativeLayout"
+        android:layout_alignEnd="@+id/relativeLayout"
+        android:layout_below="@+id/relativeLayout"
+        android:src="@android:drawable/ic_menu_gallery" />
+
 </RelativeLayout>

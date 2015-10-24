@@ -3,6 +3,7 @@ package net.lionfree.bensonkuo.benui;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private String drinkMenuResult;
 
     private int REQUEST_TAKE_PHOTO = 2;
+    private ImageView photoImageView;
 
     private ProgressBar progressBar;
     private ProgressDialog progressDialog;  // 不需要layout
@@ -100,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
         inputText.setText(sp.getString("inputText", " "));
         hideCheckBox.setChecked(sp.getBoolean("hideCheckBox", false));
 
-
         recordListView = (ListView) findViewById(R.id.recordListView);
         showRecord();
 
@@ -108,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
         setStoreInfo();
 
         progressDialog = new ProgressDialog(this);
+
+        photoImageView = (ImageView)findViewById(R.id.photo);
     }
 
 
@@ -287,8 +291,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if ((requestCode == REQUEST_DRINK_MENU) && (resultCode == RESULT_OK)) {
             drinkMenuResult = data.getStringExtra("order");
-        } else if (()) {
-
+        } else if ((requestCode == REQUEST_TAKE_PHOTO) && (resultCode == RESULT_OK)) {
+            Bitmap bm = data.getParcelableExtra("data");
+            photoImageView.setImageBitmap(bm);
         }
     }
 
@@ -311,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToCamera() {
         Intent intent = new Intent();
-        
+
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
 
         startActivityForResult(intent, REQUEST_TAKE_PHOTO);
