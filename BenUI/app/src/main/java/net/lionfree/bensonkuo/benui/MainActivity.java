@@ -1,5 +1,6 @@
 package net.lionfree.bensonkuo.benui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -38,12 +40,15 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView recordListView;
     private Spinner storeSpinner;
+
     SharedPreferences sp;//讀取用
     SharedPreferences.Editor editor; //編輯用
 
     private int REQUEST_DRINK_MENU = 1;
-
     private String drinkMenuResult;
+
+    private ProgressBar progressBar;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -189,6 +194,9 @@ public class MainActivity extends AppCompatActivity {
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
                     orderObjectToListView(objects);
+                    recordListView.setVisibility(View.VISIBLE);
+                    progressBar = (ProgressBar)findViewById(R.id.progressBar);
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
