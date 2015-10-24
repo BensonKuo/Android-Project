@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private String drinkMenuResult;
 
     private ProgressBar progressBar;
-    private ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;  // 不需要layout
 
 
     @Override
@@ -101,10 +101,15 @@ public class MainActivity extends AppCompatActivity {
 
         storeSpinner = (Spinner) findViewById(R.id.storeSpinner);
         setStoreInfo();
+
+        progressDialog = new ProgressDialog(this);
     }
 
 
     public void submit(View view) {
+        progressDialog.setTitle("Saving...");
+        progressDialog.show();
+
         try {
             String text = inputText.getText().toString();
             if (hideCheckBox.isChecked()) {
@@ -134,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
             orderInfoObj.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
+                    progressDialog.dismiss();
                     // update listview after saved
                     showRecord();
                     Toast.makeText(MainActivity.this, "Saved!", Toast.LENGTH_LONG).show();
@@ -195,7 +201,8 @@ public class MainActivity extends AppCompatActivity {
                 if (e == null) {
                     orderObjectToListView(objects);
                     recordListView.setVisibility(View.VISIBLE);
-                    progressBar = (ProgressBar)findViewById(R.id.progressBar);
+
+                    progressBar = (ProgressBar) findViewById(R.id.progressBar);
                     progressBar.setVisibility(View.GONE);
                 }
             }
