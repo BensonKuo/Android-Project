@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
-        photoImageView = (ImageView)findViewById(R.id.photo);
+        photoImageView = (ImageView) findViewById(R.id.photo);
     }
 
 
@@ -292,8 +293,10 @@ public class MainActivity extends AppCompatActivity {
         if ((requestCode == REQUEST_DRINK_MENU) && (resultCode == RESULT_OK)) {
             drinkMenuResult = data.getStringExtra("order");
         } else if ((requestCode == REQUEST_TAKE_PHOTO) && (resultCode == RESULT_OK)) {
-            Bitmap bm = data.getParcelableExtra("data");
-            photoImageView.setImageBitmap(bm);
+            //Bitmap bm = data.getParcelableExtra("data");
+            //photoImageView.setImageBitmap(bm);
+            Uri uri = Utils.getPhotoURI();
+            photoImageView.setImageURI(uri);
         }
     }
 
@@ -319,6 +322,9 @@ public class MainActivity extends AppCompatActivity {
 
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
 
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Utils.getPhotoURI());
+        //The name of the Intent-extra used to indicate a content resolver
+        // Uri to be used to store the requested image or video
         startActivityForResult(intent, REQUEST_TAKE_PHOTO);
 
     }

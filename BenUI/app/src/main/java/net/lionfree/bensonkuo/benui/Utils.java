@@ -4,7 +4,10 @@ package net.lionfree.bensonkuo.benui;
  * Created by bensonkuo on 2015/10/23.
  */
 import android.content.Context;
+import android.net.Uri;
+import android.os.Environment;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -49,5 +52,17 @@ public class Utils {
         }
         // when no file exists
         return "";
+    }
+
+    public static Uri getPhotoURI(){
+        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
+        if (! dir.exists()){
+            dir.mkdirs();
+        }
+
+        File file = new File(dir, "123.png");
+
+        return Uri.fromFile(file) ;
     }
 }
