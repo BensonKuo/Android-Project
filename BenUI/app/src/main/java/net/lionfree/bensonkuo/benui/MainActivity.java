@@ -3,9 +3,12 @@ package net.lionfree.bensonkuo.benui;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     private int REQUEST_DRINK_MENU = 1;
     private String drinkMenuResult;
+
+    private int REQUEST_TAKE_PHOTO = 2;
 
     private ProgressBar progressBar;
     private ProgressDialog progressDialog;  // 不需要layout
@@ -107,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void submit(View view) {
-        progressDialog.setTitle("Saving...");
+        progressDialog.setTitle("Saving to DB...");
         progressDialog.show();
 
         try {
@@ -282,7 +287,35 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if ((requestCode == REQUEST_DRINK_MENU) && (resultCode == RESULT_OK)) {
             drinkMenuResult = data.getStringExtra("order");
+        } else if (()) {
+
         }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_take_photo) {
+            goToCamera();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void goToCamera() {
+        Intent intent = new Intent();
+        
+        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        startActivityForResult(intent, REQUEST_TAKE_PHOTO);
+
     }
 
 }

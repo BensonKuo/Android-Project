@@ -3,4 +3,5 @@
     <string name="hide_text">hide text</string>
     <string name="menu">menu</string>
     <string name="send">send</string>
+    <string name="action_take_photo">Take Photo</string>
 </resources>
