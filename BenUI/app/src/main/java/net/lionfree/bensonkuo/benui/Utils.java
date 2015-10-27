@@ -84,11 +84,10 @@ public class Utils {
 
             byte[] buffer = new byte[1024];
             int len = 0;
-
+            // 讀is內的東西到buffer?
             while ((len = is.read(buffer)) != -1) {
                 // Reads a single byte from this stream and returns it as an integer in the range from 0 to 255. Returns -1 if the end of the stream has been reached. Blocks until one byte has been read, the end of the source stream is detected or an exception is thrown.
-                baos.write(buffer, 0, len);
-                // Writes the specified byte oneByte to the OutputStream. Only the low order byte of oneByte is written.
+                baos.write(buffer, 0, len); //從buffer 寫到 baos?
             }
             // Returns the contents of this ByteArrayOutputStream as a byte array.
             return baos.toByteArray();
