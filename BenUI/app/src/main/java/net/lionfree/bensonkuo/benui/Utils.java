@@ -15,6 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Time;
 
 
@@ -70,7 +72,7 @@ public class Utils {
         return Uri.fromFile(file);
     }
 
-
+    // 把檔案路徑位置變成 bytes
     public static byte[] uriToBytes(Context context, Uri uri) {
         try {
             // getContentResolver()是啥？
@@ -85,7 +87,7 @@ public class Utils {
 
             while ((len = is.read(buffer)) != -1) {
                 // Reads a single byte from this stream and returns it as an integer in the range from 0 to 255. Returns -1 if the end of the stream has been reached. Blocks until one byte has been read, the end of the source stream is detected or an exception is thrown.
-                baos.write(buffer);
+                baos.write(buffer, 0, len);
                 // Writes the specified byte oneByte to the OutputStream. Only the low order byte of oneByte is written.
             }
             // Returns the contents of this ByteArrayOutputStream as a byte array.
@@ -93,9 +95,33 @@ public class Utils {
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.toString();
         }
         return null;
     }
+
+    // 把輸入的網址變成byte array
+    public static byte[] urlToBytes(String urlStr) {
+        try {
+            URL url = new URL(urlStr);
+            URLConnection connection = url.openConnection();
+            // Returns a new connection to the resource referred to by this URL.
+            InputStream is = connection.getInputStream();
+            // Returns an input stream to read data from this socket.
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while ((len = is.read(buffer)) != -1){
+                baos.write(buffer,0,len);
+            }
+            return baos.toByteArray();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
