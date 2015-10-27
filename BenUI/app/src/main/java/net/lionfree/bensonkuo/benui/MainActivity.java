@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
@@ -34,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
     private ProgressDialog progressDialog;  // 不需要layout
+
+    private Boolean hasPhoto = false;
 
 
     @Override
@@ -130,8 +134,9 @@ public class MainActivity extends AppCompatActivity {
             JSONObject orderInfo = new JSONObject();
             orderInfo.put("name", text);
             orderInfo.put("storeInfo", storeSpinner.getSelectedItem().toString());
-            orderInfo.put("order", new JSONArray(drinkMenuResult));//還原成原本的型別
-
+            if (drinkMenuResult != null){
+                orderInfo.put("order", new JSONArray(drinkMenuResult));//還原成原本的型別
+            }
             // 把物件轉成字串
             String orderInfoStr = orderInfo.toString();
             // write files
@@ -145,6 +150,12 @@ public class MainActivity extends AppCompatActivity {
             orderInfoObj.put("storeInfo", storeSpinner.getSelectedItem().toString());
             if (drinkMenuResult != null) {  //不然未選送出menu內容送出會crash
                 orderInfoObj.put("order", new JSONArray(drinkMenuResult));
+            }
+
+            if (hasPhoto){
+                Uri uri = Utils.getPhotoURI();
+                ParseFile pfile = new ParseFile("photo.png",Utils.uriToBytes(this, uri));
+                orderInfoObj.put("files", pfile);
             }
             orderInfoObj.saveInBackground(new SaveCallback() {
                 @Override
@@ -297,6 +308,7 @@ public class MainActivity extends AppCompatActivity {
             //photoImageView.setImageBitmap(bm);
             Uri uri = Utils.getPhotoURI();
             photoImageView.setImageURI(uri);
+            hasPhoto = true;
         }
     }
 
@@ -319,14 +331,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToCamera() {
         Intent intent = new Intent();
-
         intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-
+        // why exists?
+        // 跟camera activity說拍成功的照片要存的路徑 不然不會存檔
+        // 但是在onactivityresult的地方是無法存取的！
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Utils.getPhotoURI());
         //The name of the Intent-extra used to indicate a content resolver
         // Uri to be used to store the requested image or video
         startActivityForResult(intent, REQUEST_TAKE_PHOTO);
-
     }
 
 }
