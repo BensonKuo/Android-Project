@@ -8,6 +8,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,8 +18,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.sql.Time;
 
 
@@ -112,12 +117,40 @@ public class Utils {
 
             byte[] buffer = new byte[1024];
             int len = 0;
-            while ((len = is.read(buffer)) != -1){
-                baos.write(buffer,0,len);
+            while ((len = is.read(buffer)) != -1) {
+                baos.write(buffer, 0, len);
             }
             return baos.toByteArray();
 
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // 把地址encode加上需求格式 後回傳
+    public static String getGEOUrl(String address) {
+        try {
+            address = URLEncoder.encode(address, "utf-8");
+            return "https://maps.googleapis.com/maps/api/geocode/json?address=" + address;
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    // 從json str 獲得經緯度座標
+    public static String getLatLngFromJSON(String jsonstr) {
+        try {
+            JSONObject obj = new JSONObject(jsonstr);
+            JSONObject location = obj.getJSONArray("results")
+                    .getJSONObject(0).getJSONObject("geometry").getJSONObject("location");
+            Double lat = location.getDouble("lat");
+            Double lng = location.getDouble("lng");
+
+            return lat + ", " + lng;
+
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return null;
