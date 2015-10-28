@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -274,7 +275,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getDrinkNumber(JSONArray order) {
-        return "17";
+//        //order.length() == 2;
+//        int drinkNumber = 0;
+//        //Log.d("oolllll", String.valueOf(order.length()));
+//        try {
+//            for (int i = 0; i < 2; i++) {
+//                    int l = order.getJSONObject(i).getInt("Large");
+//                    int m = order.getJSONObject(i).getInt("Medium");
+//                    drinkNumber +=  (l + m);
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return String.valueOf(drinkNumber);
+        return "23";
     }
 
     private void setStoreInfo() {
@@ -319,6 +334,9 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, OrderDetailActivity.class);
         intent.putExtra("storeInfo", storeInfo);
+
+        intent.putExtra("drink",drinkMenuResult);
+
         startActivity(intent);
     }
 
