@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -110,6 +111,12 @@ public class MainActivity extends AppCompatActivity {
 
         recordListView = (ListView) findViewById(R.id.recordListView);
         showRecord();
+        recordListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                goToOrderDetail();
+            }
+        });
 
         storeSpinner = (Spinner) findViewById(R.id.storeSpinner);
         setStoreInfo();
@@ -297,6 +304,12 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("store_info", storeInfoStr);
 
         startActivityForResult(intent, REQUEST_DRINK_MENU);
+    }
+
+
+    public void goToOrderDetail(){
+        Intent intent = new Intent(this, OrderDetailActivity.class);
+        startActivity(intent);
     }
 
     // 接收回來的intent 跟startActivityForResult(), setResult()是一起的
