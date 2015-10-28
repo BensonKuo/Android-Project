@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;  // 不需要layout
 
     private Boolean hasPhoto = false;
+
+    private List<ParseObject> queryResult;
 
 
     @Override
@@ -114,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         recordListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                goToOrderDetail();
+                goToOrderDetail(position);
             }
         });
 
@@ -141,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
             JSONObject orderInfo = new JSONObject();
             orderInfo.put("name", text);
             orderInfo.put("storeInfo", storeSpinner.getSelectedItem().toString());
-            if (drinkMenuResult != null){
+            if (drinkMenuResult != null) {
                 orderInfo.put("order", new JSONArray(drinkMenuResult));//還原成原本的型別
             }
             // 把物件轉成字串
@@ -159,9 +162,9 @@ public class MainActivity extends AppCompatActivity {
                 orderInfoObj.put("order", new JSONArray(drinkMenuResult));
             }
 
-            if (hasPhoto){
+            if (hasPhoto) {
                 Uri uri = Utils.getPhotoURI();
-                ParseFile pfile = new ParseFile("photo.png",Utils.uriToBytes(this, uri));
+                ParseFile pfile = new ParseFile("photo.png", Utils.uriToBytes(this, uri));
                 orderInfoObj.put("files", pfile);
             }
             orderInfoObj.saveInBackground(new SaveCallback() {
@@ -227,6 +230,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
+                    queryResult = objects;
+
                     orderObjectToListView(objects);
                     recordListView.setVisibility(View.VISIBLE);
 
@@ -307,8 +312,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void goToOrderDetail(){
+    public void goToOrderDetail(int position) {
+
+        ParseObject pobj = queryResult.get(position);
+        String storeInfo = pobj.getString("storeInfo");
+
         Intent intent = new Intent(this, OrderDetailActivity.class);
+        intent.putExtra("storeInfo", storeInfo);
         startActivity(intent);
     }
 
