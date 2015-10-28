@@ -256,6 +256,9 @@ public class MainActivity extends AppCompatActivity {
             String storeInfo = pobj.getString("storeInfo");
             JSONArray order = pobj.getJSONArray("order");
 
+           // String debug = order.toString();
+           // Log.d("ordercontent", debug);
+
             Map<String, String> item = new HashMap();
             item.put("name", name);
             item.put("storeInfo", storeInfo);
@@ -275,21 +278,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getDrinkNumber(JSONArray order) {
-//        //order.length() == 2;
-//        int drinkNumber = 0;
-//        //Log.d("oolllll", String.valueOf(order.length()));
-//        try {
-//            for (int i = 0; i < 2; i++) {
-//                    int l = order.getJSONObject(i).getInt("Large");
-//                    int m = order.getJSONObject(i).getInt("Medium");
-//                    drinkNumber +=  (l + m);
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return String.valueOf(drinkNumber);
-        return "23";
+
+        int drinkNumber = 0;
+
+        Log.d("length", String.valueOf(order.length()));
+        try {
+            for (int i = 0; i < order.length(); i++) {
+                    int l = order.getJSONObject(i).getInt("Large");
+                    int m = order.getJSONObject(i).getInt("Medium");
+                    drinkNumber +=  (l + m);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return String.valueOf(drinkNumber);
+        //return "23";
     }
 
     private void setStoreInfo() {
@@ -334,8 +338,6 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, OrderDetailActivity.class);
         intent.putExtra("storeInfo", storeInfo);
-
-        intent.putExtra("drink",drinkMenuResult);
 
         startActivity(intent);
     }
