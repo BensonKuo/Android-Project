@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (hasPhoto) {
-                Uri uri = Utils.getPhotoURI();
+                Uri uri = Utils.getPhotoURI();//改成不同時間作為檔名會不會有問題？
                 ParseFile pfile = new ParseFile("photo.png", Utils.uriToBytes(this, uri));
                 orderInfoObj.put("files", pfile);
             }
