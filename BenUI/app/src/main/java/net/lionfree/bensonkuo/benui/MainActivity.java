@@ -310,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
                     String name = pobj.getString("name");
                     String address = pobj.getString("address");
                     //存入store array
-                    store[i] = name + ", " + address;
+                    store[i] = name + "," + address;
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, store);
                 storeSpinner.setAdapter(adapter);

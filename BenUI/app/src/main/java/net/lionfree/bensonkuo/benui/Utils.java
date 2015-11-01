@@ -89,11 +89,15 @@ public class Utils {
 
             byte[] buffer = new byte[1024];
             int len = 0;
+            // is is only readable!!
             // 讀is內的東西到buffer yes
             // 假如data 有2000 1024 first, then 976
+            // buffer內容是不斷複寫更換的
             while ((len = is.read(buffer)) != -1) {
                 // Reads a single byte from this stream and returns it as an integer in the range from 0 to 255. Returns -1 if the end of the stream has been reached. Blocks until one byte has been read, the end of the source stream is detected or an exception is thrown.
-                baos.write(buffer, 0, len); //從buffer 寫到 baos? yes 0~1024 then 0~976
+                baos.write(buffer, 0, len);
+                //從buffer 寫到 baos? yes 0~1024 then 0~976
+                //不家後面兩個參數就會read 1024 everytime ,讀到不是自己的東西
                 // buffer will append into baos
             }
             // Returns the contents of this ByteArrayOutputStream as a byte array.
