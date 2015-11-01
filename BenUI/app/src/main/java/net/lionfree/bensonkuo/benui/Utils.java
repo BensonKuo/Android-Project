@@ -145,6 +145,7 @@ public class Utils {
         }
         return null;
     }
+
     // 從json str 獲得經緯度座標
     public static String getLatLngFromJSON(String jsonstr) {
         try {
@@ -154,7 +155,7 @@ public class Utils {
             Double lat = location.getDouble("lat");
             Double lng = location.getDouble("lng");
 
-            return lat + ", " + lng;
+            return lat + "," + lng;
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -162,4 +163,8 @@ public class Utils {
         return null;
     }
 
+
+    public static String getStaticMapUrl(String center, String zoom, String size){
+        return String.format("https://maps.googleapis.com/maps/api/staticmap?center=%s&zoom=%s&size=%s", center, zoom, size);
+    }
 }

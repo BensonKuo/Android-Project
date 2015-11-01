@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -15,6 +17,9 @@ public class OrderDetailActivity extends AppCompatActivity {
     private TextView addressTextView;
     //private String address;
     private ProgressDialog progressDialog;
+
+    private WebView webView;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,45 +57,51 @@ public class OrderDetailActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         GeoCodingTask task = new GeoCodingTask();
-
         task.execute(address);
+
+
+        webView = (WebView)findViewById(R.id.webView);
+        imageView = (ImageView)findViewById(R.id.imageView);
+
+    }
+
+    private class GeoCodingTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setTitle("Converting...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String url = Utils.getGEOUrl(params[0]);
+            String jsonStr = new String(Utils.urlToBytes(url)); // cannot use toString()?
+            Log.d("new String", jsonStr);
+            // Log.d("toString()",jsonStr1);// output: [B@2801ffa4
+
+            String latLng = Utils.getLatLngFromJSON(jsonStr);
+            Log.d("latlng", latLng);
+            return latLng;
+        }
+
+//            @Override
+//            protected Void onProgressUpdate(){
+//
+//            }
+
+        @Override
+        protected void onPostExecute(String result) {
+            progressDialog.dismiss();
+
+            addressTextView.setText(result);
+
+            String staticMap1 = Utils.getStaticMapUrl(result,"16","600x400");
+            webView.loadUrl(staticMap1);
+
+        }
     }
 
 
-        private class GeoCodingTask extends AsyncTask<String,Void,String>{
-
-            @Override
-            protected void onPreExecute(){
-                progressDialog.setTitle("Converting...");
-                progressDialog.show();
-            }
-
-            @Override
-            protected String doInBackground(String...params){
-                String url = Utils.getGEOUrl(params[0]);
-                //Log.d("url",url);
-                String jsonStr = new String(Utils.urlToBytes(url)); // cannot use toString()?
-                //Log.d("jsonstr",jsonStr);
-                String latLng = Utils.getLatLngFromJSON(jsonStr);
-                Log.d("latlng",latLng);
-                return latLng;
-            }
-
-            @Override
-            protected void onPostExecute(String result){
-                progressDialog.dismiss();
-
-                addressTextView.setText(result);
-
-            }
-        }
-
-
-
-
-
-
-//
 
 
 }
