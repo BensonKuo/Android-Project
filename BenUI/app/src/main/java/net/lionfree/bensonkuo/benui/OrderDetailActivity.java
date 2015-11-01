@@ -1,6 +1,8 @@
 package net.lionfree.bensonkuo.benui;
 
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -60,8 +62,8 @@ public class OrderDetailActivity extends AppCompatActivity {
         task.execute(address);
 
 
-        webView = (WebView)findViewById(R.id.webView);
-        imageView = (ImageView)findViewById(R.id.imageView);
+        webView = (WebView) findViewById(R.id.webView);
+        imageView = (ImageView) findViewById(R.id.imageView);
 
     }
 
@@ -95,13 +97,30 @@ public class OrderDetailActivity extends AppCompatActivity {
 
             addressTextView.setText(result);
 
-            String staticMap1 = Utils.getStaticMapUrl(result,"16","600x400");
+            // web view pic
+            String staticMap1 = Utils.getStaticMapUrl(result, "16", "600x400");
             webView.loadUrl(staticMap1);
 
+            StaticMapTask smt = new StaticMapTask();
+            smt.execute(result);
         }
     }
 
 
+    private class StaticMapTask extends AsyncTask<String, Void, byte[]> {
+        @Override
+        protected byte[] doInBackground(String...params) {
+            String mapUrl = Utils.getStaticMapUrl(params[0], "15", "800x600");
+            return Utils.urlToBytes(mapUrl);
+        }
+
+        @Override
+        protected void onPostExecute(byte[] bytes){
+            Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            imageView.setImageBitmap(bm);
+        }
+
+    }
 
 
 }

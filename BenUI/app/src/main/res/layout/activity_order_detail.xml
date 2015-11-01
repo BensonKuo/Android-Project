@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.simpleui.OrderDetailActivity">
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -30,5 +34,7 @@
         android:id="@+id/imageView"
         android:layout_below="@+id/webView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="90dp" />
+        android:layout_marginTop="90dp"
+        android:src="@mipmap/ic_launcher" />
 </RelativeLayout>
+</ScrollView>
