@@ -23,15 +23,30 @@
             android:layout_alignParentEnd="true"
             android:hint="name" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/hide_text"
-            android:id="@+id/hideCheckBox"
-            android:layout_below="@+id/inputText"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:checked="false" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hide_text"
+                android:id="@+id/hideCheckBox"
+                android:layout_below="@+id/inputText"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:checked="false" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hide img"
+                android:id="@+id/hideImgCheckBox"
+                android:checked="false"
+                android:onClick="hideImage" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <RelativeLayout

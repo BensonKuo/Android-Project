@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText inputText;
     private CheckBox hideCheckBox;
+    private CheckBox hideImgCheckBox;
 
     private ListView recordListView;
     private Spinner storeSpinner;
@@ -108,10 +109,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        hideImgCheckBox = (CheckBox)findViewById(R.id.hideImgCheckBox);
+        hideImgCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                editor.putBoolean("hideImg",isChecked);
+                editor.commit();
+            }
+        });
+
 
         // restore status (key, deVal)
         inputText.setText(sp.getString("inputText", " "));
         hideCheckBox.setChecked(sp.getBoolean("hideCheckBox", false));
+        hideImgCheckBox.setChecked(sp.getBoolean("hideImg", false));
 
         recordListView = (ListView) findViewById(R.id.recordListView);
         showRecord();
@@ -128,9 +139,16 @@ public class MainActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         photoImageView = (ImageView) findViewById(R.id.photo);
+        hideImage(hideImgCheckBox);
     }
 
-
+    public void hideImage(View view){
+        if (hideImgCheckBox.isChecked()){
+            photoImageView.setVisibility(View.GONE);
+        }else{
+            photoImageView.setVisibility(View.VISIBLE);
+        }
+    }
     public void submit(View view) {
         progressDialog.setTitle("Saving to DB...");
         progressDialog.show();

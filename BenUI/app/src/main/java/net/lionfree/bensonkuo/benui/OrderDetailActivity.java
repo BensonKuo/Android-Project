@@ -70,7 +70,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     private class GeoCodingTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
-            progressDialog.setTitle("Converting...");
+            progressDialog.setTitle("Locating...");
             progressDialog.show();
         }
 
@@ -95,6 +95,9 @@ public class OrderDetailActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             progressDialog.dismiss();
 
+            progressDialog.setTitle("Rendering...");
+            progressDialog.show();
+
             addressTextView.setText(result);
 
             // web view pic
@@ -110,12 +113,14 @@ public class OrderDetailActivity extends AppCompatActivity {
     private class StaticMapTask extends AsyncTask<String, Void, byte[]> {
         @Override
         protected byte[] doInBackground(String...params) {
-            String mapUrl = Utils.getStaticMapUrl(params[0], "15", "800x600");
+            String mapUrl = Utils.getStaticMapUrl(params[0], "16", "800x600");
             return Utils.urlToBytes(mapUrl);
         }
 
         @Override
         protected void onPostExecute(byte[] bytes){
+            progressDialog.dismiss();
+
             Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             imageView.setImageBitmap(bm);
         }
