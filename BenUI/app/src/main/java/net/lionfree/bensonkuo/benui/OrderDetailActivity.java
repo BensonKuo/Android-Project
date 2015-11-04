@@ -10,11 +10,14 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,7 +25,7 @@ import org.json.JSONException;
 public class OrderDetailActivity extends AppCompatActivity {
 
     private TextView addressTextView;
-    //private String address;
+    private String store;
     private ProgressDialog progressDialog;
 
     private WebView webView;
@@ -38,7 +41,7 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         addressTextView = (TextView) findViewById(R.id.address);
 
-        String store = getIntent().getStringExtra("storeInfo");
+        store = getIntent().getStringExtra("storeInfo");
         String address = store.split(",")[1];
         //Log.d("address", address);
 
@@ -85,7 +88,19 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
 
+        String name = store.split(",")[0];
+        String address = store.split(",")[1];
 
+        MarkerOptions markerOpts = new MarkerOptions().title(name).snippet(address).flat(true).position(latLng);
+        googleMap.addMarker(markerOpts);
+        googleMap.setMyLocationEnabled(true);
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Toast.makeText(OrderDetailActivity.this, marker.getTitle(), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
 
 
