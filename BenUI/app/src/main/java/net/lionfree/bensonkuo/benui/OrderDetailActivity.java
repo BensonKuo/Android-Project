@@ -11,6 +11,11 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -22,6 +27,9 @@ public class OrderDetailActivity extends AppCompatActivity {
 
     private WebView webView;
     private ImageView imageView;
+
+    private SupportMapFragment mapFragment;
+    private GoogleMap googleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +73,21 @@ public class OrderDetailActivity extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.webView);
         imageView = (ImageView) findViewById(R.id.imageView);
 
+        mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.googleMap);
+        googleMap = mapFragment.getMap();
     }
+
+    private void setupGoogleMap(String latlngStr){
+        Double lat = Double.valueOf(latlngStr.split(",")[0]);
+        Double lng = Double.valueOf(latlngStr.split(",")[1]);
+
+        LatLng latLng = new LatLng(lat,lng);
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+
+
+    }
+
 
     private class GeoCodingTask extends AsyncTask<String, Void, String> {
         @Override
@@ -77,7 +99,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             String url = Utils.getGEOUrl(params[0]);
-            String jsonStr = new String(Utils.urlToBytes(url)); // cannot use toString()?
+            String jsonStr = new String(Utils.urlToBytes(url)); // cannot use toString()
             Log.d("new String", jsonStr);
             // Log.d("toString()",jsonStr1);// output: [B@2801ffa4
 
@@ -103,6 +125,9 @@ public class OrderDetailActivity extends AppCompatActivity {
             // web view pic
             String staticMap1 = Utils.getStaticMapUrl(result, "16", "600x400");
             webView.loadUrl(staticMap1);
+
+            // google map
+            setupGoogleMap(result);
 
             StaticMapTask smt = new StaticMapTask();
             smt.execute(result);
