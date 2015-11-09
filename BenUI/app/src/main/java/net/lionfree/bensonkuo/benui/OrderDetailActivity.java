@@ -85,7 +85,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         Double lng = Double.valueOf(latlngStr.split(",")[1]);
 
         LatLng latLng = new LatLng(lat,lng);
-
+        googleMap.setMapType(1);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
 
         String name = store.split(",")[0];
