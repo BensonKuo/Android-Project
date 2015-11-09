@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
+        // 應該放在main to get token 啦其實
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         if (accessToken != null) {
             GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
@@ -66,7 +67,23 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                if (accessToken != null) {
+                    GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(JSONObject object, GraphResponse response) {
+                            String userName = null;
+                            try {
+                                userName = object.getString("name");
+                                Log.d("fb-username", userName);
+                                goToMain(userName);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).executeAsync();
 
+                }
             }
 
             @Override
