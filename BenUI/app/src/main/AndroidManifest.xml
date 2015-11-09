@@ -17,7 +17,10 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyADjMTPyXV7Q5n5L4N6nWKL3wWXrLwyeUA" />
+            android:value="AIzaSyADjMTPyXV7Q5n5L4N6nWKL3wWXrLwyeUA"
+            />
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        ...
         <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,6 +32,11 @@
         </activity>
         <activity android:name=".OrderDetailActivity" >
         </activity>
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
     </application>
 
 </manifest>
