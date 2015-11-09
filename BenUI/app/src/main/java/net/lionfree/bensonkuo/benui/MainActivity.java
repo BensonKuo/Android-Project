@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -75,6 +76,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // show user fb detail
+        TextView fbtext = (TextView)findViewById(R.id.fbname);
+        fbtext.setText(getIntent().getStringExtra("fbUserName"));
 
         // 要在oncreate 才可以啊
         sp = getSharedPreferences("setting", MODE_PRIVATE);
