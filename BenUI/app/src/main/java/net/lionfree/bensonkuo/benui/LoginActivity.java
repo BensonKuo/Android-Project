@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    // 架構怪怪的
     private void goToMain(String userName) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("fbUserName",userName);
@@ -102,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-        // 只是為了拿到參數而已
+        // 只是為了從登入頁面拿到參數而已
         // callbackmanager會handle好一切(store token on device)
         // 之後只需要getCurrentAccessToken()即可
     }

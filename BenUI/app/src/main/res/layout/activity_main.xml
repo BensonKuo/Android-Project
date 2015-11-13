@@ -80,11 +80,11 @@
             android:layout_height="wrap_content"
             android:text="@string/menu"
             android:id="@+id/goTOMenu"
-            android:onClick="goToDrinkMenu"
             android:layout_weight="0.07"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/submitButton"
-            android:layout_toStartOf="@+id/submitButton" />
+            android:layout_toStartOf="@+id/submitButton"
+            android:onClick="goToDrinkMenu" />
 
         <Button
             android:layout_width="wrap_content"

@@ -1,5 +1,6 @@
 package net.lionfree.bensonkuo.benui;
 
+import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -147,6 +148,11 @@ public class MainActivity extends AppCompatActivity {
 
         photoImageView = (ImageView) findViewById(R.id.photo);
         hideImage(hideImgCheckBox);
+    }
+
+    public void goToSomething(View view){
+        Intent intent = new Intent(Intent.ACTION_SEARCH);
+        startActivity(intent);
     }
 
     public void hideImage(View view){
