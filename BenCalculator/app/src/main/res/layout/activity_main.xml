@@ -40,7 +40,7 @@
                 android:text="@string/one"
                 android:id="@+id/one"
                 android:longClickable="false"
-                android:onClick="inputNumber" />
+                android:onClick="updateRecord" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -58,7 +58,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/plus"
-                android:id="@+id/plus" />
+                android:id="@+id/plus"
+                android:onClick="updateRecord" />
         </LinearLayout>
 
         <LinearLayout
