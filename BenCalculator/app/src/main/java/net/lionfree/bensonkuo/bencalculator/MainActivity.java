@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     // when pressing btn
     public void updateRecord(View view) {
 
-        // 把 id 傳給負責計算的function
-        // toCalculate(view.getId());
 
         btn = (Button) findViewById(view.getId());
         // get current input content
@@ -49,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         }
         // 取得目前的 顯示內容
         record = calcTextView.getText().toString();
-
 
         switch (view.getId()) {
             case R.id.one:
@@ -63,6 +60,60 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(this, currentInput, Toast.LENGTH_SHORT).show();
                 calcTextView.setText(record + currentInput);
                 break;
+            case R.id.two:
+                tmpNumber += currentInput;
+                Log.d("tmpNumber", tmpNumber);
+
+                calcTextView.setText(record + currentInput);
+                break;
+            case R.id.three:
+                tmpNumber += currentInput;
+                Log.d("tmpNumber", tmpNumber);
+
+                calcTextView.setText(record + currentInput);
+                break;
+            case R.id.four:
+                tmpNumber += currentInput;
+                Log.d("tmpNumber", tmpNumber);
+
+                calcTextView.setText(record + currentInput);
+                break;
+            case R.id.five:
+                tmpNumber += currentInput;
+                Log.d("tmpNumber", tmpNumber);
+
+                calcTextView.setText(record + currentInput);
+                break;
+            case R.id.six:
+                tmpNumber += currentInput;
+                Log.d("tmpNumber", tmpNumber);
+
+                calcTextView.setText(record + currentInput);
+                break;
+            case R.id.seven:
+                tmpNumber += currentInput;
+                Log.d("tmpNumber", tmpNumber);
+                calcTextView.setText(record + currentInput);
+                break;
+            case R.id.eight:
+                tmpNumber += currentInput;
+                Log.d("tmpNumber", tmpNumber);
+
+                calcTextView.setText(record + currentInput);
+                break;
+            case R.id.nine:
+                tmpNumber += currentInput;
+                Log.d("tmpNumber", tmpNumber);
+
+                calcTextView.setText(record + currentInput);
+                break;
+            case R.id.zero:
+                tmpNumber += currentInput;
+                Log.d("tmpNumber", tmpNumber);
+
+                calcTextView.setText(record + currentInput);
+                break;
+
 
             case R.id.plus:
                 if (tmpNumber != "") { // to ensure user inputNumber first
@@ -84,6 +135,16 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "Invalid input!", Toast.LENGTH_SHORT).show();
                 }
 
+                break;
+
+            case R.id.times:
+                if (tmpNumber != "") {
+                    inputNumber(tmpNumber); // send tmpNumber
+                    inputOperator(currentInput);// send "+"
+                    calcTextView.setText(record + currentInput);
+                } else {
+                    Toast.makeText(this, "Invalid input!", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             default:
@@ -115,16 +176,34 @@ public class MainActivity extends AppCompatActivity {
 
         inputNumber(tmpNumber);
 
+
         int result = 0;
-        Log.d("c<", String.valueOf(j));
+
+        for (int m = 0; m < j; m++) {
+            switch (operator[m]) {
+                case "x":
+                    if (m != 0) {
+                        number[m] = number[m] * number[m + 1];
+                    }
+                    break;
+            }
+        }
+
 
         for (int c = 0; c < j; c++) {
             switch (operator[c]) {
-                case "+":
+                case "x":
                     if (c == 0) {
-                        result += (number[0] + number[1]);
-                    } else {
-                        result += number[c + 1];
+                        result += (number[0] * number[1]);
+                    }
+                    break;
+                case "+":
+                    if(operator[c+1] != "x") {
+                        if (c == 0) {
+                            result += (number[0] + number[1]);
+                        } else {
+                            result += number[c + 1];
+                        }
                     }
                     break;
                 case "-":
