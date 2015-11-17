@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // when pressing btn
-    public void updateRecord(View view) {
+    public void btnPress(View view) {
 
 
         btn = (Button) findViewById(view.getId());
@@ -160,12 +160,6 @@ public class MainActivity extends AppCompatActivity {
     private void inputNumber(String input) {
         number[i] = Integer.parseInt(input);
 
-        Log.d("inow", String.valueOf(i));
-        Log.d("array0", String.valueOf(number[0]));
-        Log.d("array1", String.valueOf(number[1]));
-        Log.d("array2", String.valueOf(number[2]));
-        Log.d("array3", String.valueOf(number[3]));
-
         // clear tmpNumber
         tmpNumber = "";
         i++;
@@ -176,9 +170,8 @@ public class MainActivity extends AppCompatActivity {
 
         inputNumber(tmpNumber);
 
-
         int result = 0;
-
+        // check for "x"
         for (int m = 0; m < j; m++) {
             switch (operator[m]) {
                 case "x":
@@ -189,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-
+        // math logic
         for (int c = 0; c < j; c++) {
             switch (operator[c]) {
                 case "x":
@@ -207,10 +200,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case "-":
-                    if (c == 0) {
-                        result += (number[0] - number[1]);
-                    } else {
-                        result -= number[c + 1];
+                    if(operator[c+1] != "x") {
+                        if (c == 0) {
+                            result += (number[0] - number[1]);
+                        } else {
+                            result -= number[c + 1];
+                        }
                     }
                     break;
             }
