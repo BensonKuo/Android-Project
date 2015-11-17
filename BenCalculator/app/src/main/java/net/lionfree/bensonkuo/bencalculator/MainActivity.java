@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     int j = 0;
 
     String record;
-    boolean done = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +39,11 @@ public class MainActivity extends AppCompatActivity {
         // toCalculate(view.getId());
 
         btn = (Button) findViewById(view.getId());
+        // get current input content
         currentInput = btn.getText().toString();
 
         // 取得目前的 顯示內容
-        if (done) {
-            calcTextView.setText("");
-            record = calcTextView.getText().toString();
-
-            done = false;
-
-        } else{
-            record = calcTextView.getText().toString();
-
-        }
+        record = calcTextView.getText().toString();
 
 
         switch (view.getId()) {
@@ -71,13 +62,19 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.plus:
                 if (tmpNumber != "") {
-                    inputNumber(tmpNumber);
+                    inputNumber(tmpNumber); // send tmpNumber
+                    inputOperator(currentInput);// send "+"
+                }else{
+                    Toast.makeText(this,"Invalid input!",Toast.LENGTH_SHORT).show();
                 }
-                inputOperator(currentInput);
 
-                //Toast.makeText(this, currentInput, Toast.LENGTH_SHORT).show();
                 calcTextView.setText(record + currentInput);
                 break;
+
+            case R.id.minus:
+
+
+
 
 
             default:
@@ -110,34 +107,37 @@ public class MainActivity extends AppCompatActivity {
         inputNumber(tmpNumber);
 
         int result = 0;
+        Log.d("c<",String.valueOf(j));
 
         for (int c = 0; c < j; c++) {
             switch (operator[c]) {
                 case "+":
                     if (c == 0) {
                         result += (number[0] + number[1]);
-                        number[0] = 0;
-                        number[1] = 0;
                     } else {
-                        result += number[++c];
-                        number[++c] = 0;
+                        result += number[c+1];
                     }
-                    operator[c] = "";
                     break;
             }
         }
-        // reset index of number and operator
-        j = 0;
-        i = 0;
 
         Toast.makeText(this, String.valueOf(result), Toast.LENGTH_SHORT).show();
         calcTextView.setText(String.valueOf(result));
 
-        done = true;
+        resetCalc();
+    }
+
+    private void resetCalc() {
+        // reset index of number and operator to over write
+        j = 0;
+        i = 0;
+
+        // clear view
+        calcTextView.setText("");
 
         // 之後再按下數字按鈕時 可以：
-        // 1. 讓user 繼續使用ans
-        // 2. clear textview   先做這個～～
+        // 1. 讓user 繼續使用ans運算
+        // 2. clear textview  重新開始計算 ～～先做這個～～
     }
 
 
