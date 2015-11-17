@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     String[] operator = new String[1024];
     int j = 0;
 
+    private boolean flag = false;
     String record;
 
     @Override
@@ -42,12 +43,15 @@ public class MainActivity extends AppCompatActivity {
         // get current input content
         currentInput = btn.getText().toString();
 
+        if (flag) {
+            calcTextView.setText("");
+            flag = false;
+        }
         // 取得目前的 顯示內容
         record = calcTextView.getText().toString();
 
 
         switch (view.getId()) {
-
             case R.id.one:
                 // 無法直接從text view 取得string to int後運算 那就分開 顯示＆運算 ！！
                 //result = Integer.parseInt("3");// "3+3" is not doable
@@ -61,21 +65,26 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.plus:
-                if (tmpNumber != "") {
+                if (tmpNumber != "") { // to ensure user inputNumber first
                     inputNumber(tmpNumber); // send tmpNumber
                     inputOperator(currentInput);// send "+"
-                }else{
-                    Toast.makeText(this,"Invalid input!",Toast.LENGTH_SHORT).show();
+                    calcTextView.setText(record + currentInput);
+                } else {
+                    Toast.makeText(this, "Invalid input!", Toast.LENGTH_SHORT).show();
                 }
 
-                calcTextView.setText(record + currentInput);
                 break;
 
             case R.id.minus:
+                if (tmpNumber != "") {
+                    inputNumber(tmpNumber); // send tmpNumber
+                    inputOperator(currentInput);// send "+"
+                    calcTextView.setText(record + currentInput);
+                } else {
+                    Toast.makeText(this, "Invalid input!", Toast.LENGTH_SHORT).show();
+                }
 
-
-
-
+                break;
 
             default:
                 Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
@@ -107,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         inputNumber(tmpNumber);
 
         int result = 0;
-        Log.d("c<",String.valueOf(j));
+        Log.d("c<", String.valueOf(j));
 
         for (int c = 0; c < j; c++) {
             switch (operator[c]) {
@@ -115,7 +124,14 @@ public class MainActivity extends AppCompatActivity {
                     if (c == 0) {
                         result += (number[0] + number[1]);
                     } else {
-                        result += number[c+1];
+                        result += number[c + 1];
+                    }
+                    break;
+                case "-":
+                    if (c == 0) {
+                        result += (number[0] - number[1]);
+                    } else {
+                        result -= number[c + 1];
                     }
                     break;
             }
@@ -133,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
         i = 0;
 
         // clear view
-        calcTextView.setText("");
+        flag = true;
 
         // 之後再按下數字按鈕時 可以：
         // 1. 讓user 繼續使用ans運算
