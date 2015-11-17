@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
     public void getResult(View v) {
 
         inputNumber(tmpNumber);
+
         int result = 0;
 
         // check for "x"
@@ -147,6 +148,11 @@ public class MainActivity extends AppCompatActivity {
                 case "x":
                     if (m != 0) {
                         number[m] = number[m] * number[m + 1];
+                    }
+                    break;
+                case "÷":
+                    if (m != 0) {
+                        number[m] = number[m] / number[m + 1];
                     }
                     break;
             }
@@ -160,8 +166,13 @@ public class MainActivity extends AppCompatActivity {
                         result += (number[0] * number[1]);
                     }
                     break;
+                case "÷":
+                    if (c == 0) {
+                        result += (number[0] / number[1]);
+                    }
+                    break;
                 case "+":
-                    if(operator[c+1] != "x") {
+                    if (operator[c + 1] != "x") {
                         if (c == 0) {
                             result += (number[0] + number[1]);
                         } else {
@@ -170,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case "-":
-                    if(operator[c+1] != "x") {
+                    if (operator[c + 1] != "x") {
                         if (c == 0) {
                             result += (number[0] - number[1]);
                         } else {
@@ -187,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
         resetCalc();
     }
 
-    public void resetInput(View v){
+    public void resetInput(View v) {
         resetCalc();
         tmpNumber = "";
         calcTextView.setText("");
@@ -196,10 +207,10 @@ public class MainActivity extends AppCompatActivity {
     public void resetCalc() {
 
         // reset index of number and operator to over write
-        for (i=0; i<number.length; i++){
+        for (i = 0; i < number.length; i++) {
             number[i] = 0;
         }
-        for (j=0; j<operator.length; j++){
+        for (j = 0; j < operator.length; j++) {
             operator[j] = "";
         }
         j = 0;
