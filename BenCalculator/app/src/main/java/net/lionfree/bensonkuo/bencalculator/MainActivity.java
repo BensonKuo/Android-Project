@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     // when pressing btn
     public void btnPress(View view) {
 
-
         btn = (Button) findViewById(view.getId());
         // get current input content
         currentInput = btn.getText().toString();
@@ -142,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
         int result = 0;
 
-        // check for "x"
+        // check for "x" and  "÷" first
         for (int m = 0; m < j; m++) {
             switch (operator[m]) {
                 case "x":
@@ -172,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case "+":
-                    if (operator[c + 1] != "x") {
+                    if (operator[c + 1] != "x" && operator[c + 1] != "÷") {
                         if (c == 0) {
                             result += (number[0] + number[1]);
                         } else {
@@ -181,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case "-":
-                    if (operator[c + 1] != "x") {
+                    if (operator[c + 1] != "x" && operator[c + 1] != "÷") {
                         if (c == 0) {
                             result += (number[0] - number[1]);
                         } else {
@@ -198,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
         resetCalc();
     }
 
+    // AC btn pressed
     public void resetInput(View v) {
         resetCalc();
         tmpNumber = "";
