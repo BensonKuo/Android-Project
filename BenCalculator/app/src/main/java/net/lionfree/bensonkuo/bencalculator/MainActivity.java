@@ -139,8 +139,8 @@ public class MainActivity extends AppCompatActivity {
     public void getResult(View v) {
 
         inputNumber(tmpNumber);
-
         int result = 0;
+
         // check for "x"
         for (int m = 0; m < j; m++) {
             switch (operator[m]) {
@@ -187,9 +187,21 @@ public class MainActivity extends AppCompatActivity {
         resetCalc();
     }
 
+    public void resetInput(View v){
+        resetCalc();
+        tmpNumber = "";
+        calcTextView.setText("");
+    }
 
-    private void resetCalc() {
+    public void resetCalc() {
+
         // reset index of number and operator to over write
+        for (i=0; i<number.length; i++){
+            number[i] = 0;
+        }
+        for (j=0; j<operator.length; j++){
+            operator[j] = "";
+        }
         j = 0;
         i = 0;
 

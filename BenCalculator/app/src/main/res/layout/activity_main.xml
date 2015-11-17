@@ -15,7 +15,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:textSize="50sp" />
+        android:textSize="50sp"
+        android:gravity="bottom|right" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -24,7 +25,8 @@
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:onClick="btnPress">
+        android:onClick="btnPress"
+        android:id="@+id/linearLayout">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -155,9 +157,10 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/equals"
-                android:id="@+id/equalsTo"
-                android:onClick="getResult" />
+                android:text="@string/reset"
+                android:id="@+id/reset"
+                android:textColor="#e57118"
+                android:onClick="resetInput" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -167,5 +170,17 @@
                 android:onClick="btnPress" />
         </LinearLayout>
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/equals"
+        android:id="@+id/equalsTo"
+        android:onClick="getResult"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
