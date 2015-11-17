@@ -54,101 +54,71 @@ public class MainActivity extends AppCompatActivity {
                 //result = Integer.parseInt("3");// "3+3" is not doable
 
                 // 銜接數字字串 輸入多位數時
-                tmpNumber += currentInput;
-                Log.d("tmpNumber", tmpNumber);
-
-                //Toast.makeText(this, currentInput, Toast.LENGTH_SHORT).show();
-                calcTextView.setText(record + currentInput);
+                sendNumber();
                 break;
             case R.id.two:
-                tmpNumber += currentInput;
-                Log.d("tmpNumber", tmpNumber);
-
-                calcTextView.setText(record + currentInput);
+                sendNumber();
                 break;
             case R.id.three:
-                tmpNumber += currentInput;
-                Log.d("tmpNumber", tmpNumber);
-
-                calcTextView.setText(record + currentInput);
+                sendNumber();
                 break;
             case R.id.four:
-                tmpNumber += currentInput;
-                Log.d("tmpNumber", tmpNumber);
-
-                calcTextView.setText(record + currentInput);
+                sendNumber();
                 break;
             case R.id.five:
-                tmpNumber += currentInput;
-                Log.d("tmpNumber", tmpNumber);
-
-                calcTextView.setText(record + currentInput);
+                sendNumber();
                 break;
             case R.id.six:
-                tmpNumber += currentInput;
-                Log.d("tmpNumber", tmpNumber);
-
-                calcTextView.setText(record + currentInput);
+                sendNumber();
                 break;
             case R.id.seven:
-                tmpNumber += currentInput;
-                Log.d("tmpNumber", tmpNumber);
-                calcTextView.setText(record + currentInput);
+                sendNumber();
                 break;
             case R.id.eight:
-                tmpNumber += currentInput;
-                Log.d("tmpNumber", tmpNumber);
-
-                calcTextView.setText(record + currentInput);
+                sendNumber();
                 break;
             case R.id.nine:
-                tmpNumber += currentInput;
-                Log.d("tmpNumber", tmpNumber);
-
-                calcTextView.setText(record + currentInput);
+                sendNumber();
                 break;
             case R.id.zero:
-                tmpNumber += currentInput;
-                Log.d("tmpNumber", tmpNumber);
-
-                calcTextView.setText(record + currentInput);
+                sendNumber();
                 break;
 
-
             case R.id.plus:
-                if (tmpNumber != "") { // to ensure user inputNumber first
-                    inputNumber(tmpNumber); // send tmpNumber
-                    inputOperator(currentInput);// send "+"
-                    calcTextView.setText(record + currentInput);
-                } else {
-                    Toast.makeText(this, "Invalid input!", Toast.LENGTH_SHORT).show();
-                }
-
+                sendInput();
                 break;
 
             case R.id.minus:
-                if (tmpNumber != "") {
-                    inputNumber(tmpNumber); // send tmpNumber
-                    inputOperator(currentInput);// send "+"
-                    calcTextView.setText(record + currentInput);
-                } else {
-                    Toast.makeText(this, "Invalid input!", Toast.LENGTH_SHORT).show();
-                }
-
+                sendInput();
                 break;
 
             case R.id.times:
-                if (tmpNumber != "") {
-                    inputNumber(tmpNumber); // send tmpNumber
-                    inputOperator(currentInput);// send "+"
-                    calcTextView.setText(record + currentInput);
-                } else {
-                    Toast.makeText(this, "Invalid input!", Toast.LENGTH_SHORT).show();
-                }
+                sendInput();
+                break;
+
+            case R.id.divide:
+                sendInput();
                 break;
 
             default:
                 Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void sendNumber() {
+        tmpNumber += currentInput;
+        Log.d("tmpNumber", tmpNumber);
+
+        calcTextView.setText(record + currentInput);
+    }
+
+    private void sendInput() {
+        if (tmpNumber != "") { // to ensure user inputNumber first
+            inputNumber(tmpNumber); // send tmpNumber
+            inputOperator(currentInput);// send "+"
+            calcTextView.setText(record + currentInput);
+        } else {
+            Toast.makeText(this, "Invalid input!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -216,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
 
         resetCalc();
     }
+
 
     private void resetCalc() {
         // reset index of number and operator to over write

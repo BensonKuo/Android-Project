@@ -157,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/equals"
                 android:id="@+id/equalsTo"
-                android:onClick="btnPress" />
+                android:onClick="getResult" />
 
             <Button
                 android:layout_width="wrap_content"
