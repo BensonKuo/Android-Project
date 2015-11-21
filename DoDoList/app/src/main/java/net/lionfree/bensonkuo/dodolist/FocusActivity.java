@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FocusActivity extends Fragment {
 
@@ -20,12 +22,16 @@ public class FocusActivity extends Fragment {
 
         MainActivity mainActivity = new MainActivity();
         text = mainActivity.getFocus();
+        Toast.makeText(getContext(),"1",Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle){
+        Toast.makeText(getContext(),"2",Toast.LENGTH_SHORT).show();
 
         return inflater.inflate(R.layout.activity_focus, container, false);
+
     }
 
     @Override
@@ -35,7 +41,9 @@ public class FocusActivity extends Fragment {
         TextView textView = (TextView)getView().findViewById(R.id.focusTextView);
         textView.setText(text);
 
-//        ImageView imageView = (ImageView)getView().findViewById(R.id.FgimageView);
-//        imageView.setImageResource(R.drawable.one);
+        Toast.makeText(getContext(),"3",Toast.LENGTH_SHORT).show();
+
+        ImageView imageView = (ImageView)getView().findViewById(R.id.focusImageView);
+        imageView.setImageResource(R.drawable.one);
     }
 }

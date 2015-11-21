@@ -24,7 +24,7 @@ public class MainActivity extends FragmentActivity {
         tabHost.setup(this, getSupportFragmentManager(), R.id.container);
 
         tabHost.addTab(tabHost.newTabSpec("Unsolved")
-                .setIndicator("1"), UnsolvedFragment.class, null);
+                .setIndicator("1"), UnsolvedActivity.class, null);
 
         tabHost.addTab(tabHost.newTabSpec("Focus")
                 .setIndicator("2"), FocusActivity.class, null);

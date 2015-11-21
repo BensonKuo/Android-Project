@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class UnsolvedFragment extends Fragment {
+public class UnsolvedActivity extends Fragment {
 
     private String text = " ";
 
@@ -27,7 +27,7 @@ public class UnsolvedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle){
 
-        return inflater.inflate(R.layout.fragment_unsolved, container, false);
+        return inflater.inflate(R.layout.activity_unsolved, container, false);
     }
 
     @Override
