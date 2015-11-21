@@ -11,19 +11,19 @@
         >
 
         <!-- Image圖片 -->
-        <!--<ImageView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/one"-->
-            <!--/>-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="200dip"
+            android:background="@drawable/one"
+            />
 
          <!--Tab標籤-->
-        <!--<TabWidget-->
-            <!--android:id="@android:id/tabs"-->
-            <!--android:orientation="vertical"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--/>-->
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
 
         <!--can't remove -->
         <FrameLayout
